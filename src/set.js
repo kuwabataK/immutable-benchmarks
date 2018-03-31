@@ -2,6 +2,8 @@ const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
 const moriJs = require('mori');
 const crio = require('crio').default;
+const BeltMapString = require('bs-platform/lib/js/belt_MapString');
+const BeltMapInt = require('bs-platform/lib/js/belt_MapInt');
 
 /**
  * Data
@@ -54,6 +56,14 @@ exports.objectSetCrio = (cycles) => {
   }
 };
 
+exports.objectSetBelt = (cycles) => {
+  const obj = BeltMapString.fromArray([['value', value]]);
+  for (let i = 0; i < cycles; i++) {
+    const newValue = Math.random();
+    BeltMapString.set(obj, 'value', newValue);
+  }
+};
+
 exports.arraySetNative = (cycles) => {
   const arr = array;
   const maxIndex = arr.length - 1;
@@ -102,5 +112,15 @@ exports.arraySetCrio = (cycles) => {
     const index = ~~(Math.random() * maxIndex);
     const newVal = Math.random();
     arr.set(index, newVal);
+  }
+};
+
+exports.arraySetBelt = (cycles) => {
+  const arr = BeltMapInt.fromArray(array.map((v, i) => [i, v]));
+  const maxIndex = BeltMapInt.size(arr) - 1;
+  for (let i = 0; i < cycles; i++) {
+    const index = ~~(Math.random() * maxIndex);
+    const newVal = Math.random();
+    BeltMapInt.set(arr, index, newVal);
   }
 };

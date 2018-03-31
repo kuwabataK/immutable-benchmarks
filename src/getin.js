@@ -3,6 +3,8 @@ const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
 const moriJs = require('mori');
 const crio = require('crio').default;
+const BeltMapString = require('bs-platform/lib/js/belt_MapString');
+const BeltMapInt = require('bs-platform/lib/js/belt_MapInt');
 
 /**
  * Data
@@ -58,13 +60,20 @@ exports.objectGetInCrio = (cycles) => {
   }
 };
 
+exports.objectGetInBelt = (cycles) => {
+  const obj = BeltMapString.fromArray([['data', BeltMapString.fromArray([['value', value]])]]);
+  for (let i = 0; i < cycles; i++) {
+    const val = BeltMapString.get(BeltMapString.get(obj, 'data')[0], 'value');
+  }
+};
+
 /**
  * Array
  */
 
 exports.arrayGetInNative = (cycles) => {
   const arr = [array];
-  const maxIndex = arr[0].length - 1;
+  const maxIndex = arr[0].length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[0][index];
@@ -73,7 +82,7 @@ exports.arrayGetInNative = (cycles) => {
 
 exports.arrayGetInSeamlessImmutableJs = (cycles) => {
   const arr = seamlessImmutableJs.from([array]);
-  const maxIndex = arr[0].length - 1;
+  const maxIndex = arr[0].length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[0][index];
@@ -91,7 +100,7 @@ exports.arrayGetInImmutableJs = (cycles) => {
 
 exports.arrayGetInMoriJs = (cycles) => {
   const arr = moriJs.vector(moriJs.vector(...array));
-  const maxIndex = moriJs.count(moriJs.get(arr, 0)) - 1;
+  const maxIndex = moriJs.count(moriJs.get(arr, 0));
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = moriJs.getIn(arr, [0, index]);
@@ -100,9 +109,18 @@ exports.arrayGetInMoriJs = (cycles) => {
 
 exports.arrayGetInCrio = (cycles) => {
   const arr = crio([array]);
-  const maxIndex = arr[0].length - 1;
+  const maxIndex = arr[0].length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[0][index];
+  }
+};
+
+exports.arrayGetInBelt = (cycles) => {
+  const arr = BeltMapInt.fromArray([[0, BeltMapInt.fromArray(array.map((v, i) => [i, v]))]]);
+  const maxIndex = BeltMapInt.size(BeltMapInt.get(arr, 0)[0]);
+  for (let i = 0; i < cycles; i++) {
+    const index = ~~(Math.random() * maxIndex);
+    const val = BeltMapInt.get(BeltMapInt.get(arr, 0)[0], index);
   }
 };

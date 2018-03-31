@@ -3,6 +3,8 @@ const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
 const moriJs = require('mori');
 const crio = require('crio').default;
+const BeltMapString = require('bs-platform/lib/js/belt_MapString');
+const BeltMapInt = require('bs-platform/lib/js/belt_MapInt');
 
 /**
  * Data
@@ -50,13 +52,20 @@ exports.objectGetCrio = (cycles) => {
   }
 };
 
+exports.objectGetBelt = (cycles) => {
+  const obj = BeltMapString.fromArray([['value', value]]);
+  for (let i = 0; i < cycles; i++) {
+    const val = BeltMapString.get(obj, 'value');
+  }
+};
+
 /**
  * Array
  */
 
 exports.arrayGetNative = (cycles) => {
   const arr = array;
-  const maxIndex = arr.length - 1;
+  const maxIndex = arr.length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[index];
@@ -65,7 +74,7 @@ exports.arrayGetNative = (cycles) => {
 
 exports.arrayGetSeamlessImmutableJs = (cycles) => {
   const arr = seamlessImmutableJs.from(array);
-  const maxIndex = arr.length - 1;
+  const maxIndex = arr.length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[index];
@@ -74,7 +83,7 @@ exports.arrayGetSeamlessImmutableJs = (cycles) => {
 
 exports.arrayGetImmutableJs = (cycles) => {
   const arr = ImmutableJs.fromJS(array);
-  const maxIndex = arr.size - 1;
+  const maxIndex = arr.size;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr.get(index);
@@ -92,9 +101,18 @@ exports.arrayGetMoriJs = (cycles) => {
 
 exports.arrayGetCrio = (cycles) => {
   const arr = crio(array);
-  const maxIndex = arr.length - 1;
+  const maxIndex = arr.length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[index];
+  }
+};
+
+exports.arrayGetBelt = (cycles) => {
+  const arr = BeltMapInt.fromArray(array.map((v, i) => [i, v]));
+  const maxIndex = BeltMapInt.size(arr);
+  for (let i = 0; i < cycles; i++) {
+    const index = ~~(Math.random() * maxIndex);
+    const val = BeltMapInt.get(arr, index);
   }
 };
