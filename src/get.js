@@ -3,6 +3,7 @@ const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
 const moriJs = require('mori');
 const crio = require('crio').default;
+const immer = require('immer').default;
 
 /**
  * Data
@@ -50,6 +51,13 @@ exports.objectGetCrio = (cycles) => {
   }
 };
 
+exports.objectGetImmer = (cycles) => {
+  const obj = {value};
+  for (let i = 0; i < cycles; i++) {
+    const val = obj.value;
+  }
+};
+
 /**
  * Array
  */
@@ -92,6 +100,15 @@ exports.arrayGetMoriJs = (cycles) => {
 
 exports.arrayGetCrio = (cycles) => {
   const arr = crio(array);
+  const maxIndex = arr.length;
+  for (let i = 0; i < cycles; i++) {
+    const index = ~~(Math.random() * maxIndex);
+    const val = arr[index];
+  }
+};
+
+exports.arrayGetImmer = (cycles) => {
+  const arr = array;
   const maxIndex = arr.length;
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
