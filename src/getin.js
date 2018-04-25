@@ -3,8 +3,6 @@ const seamlessImmutableJs = require('seamless-immutable');
 const ImmutableJs = require('immutable');
 const moriJs = require('mori');
 const crio = require('crio').default;
-const BeltMapString = require('bs-platform/lib/js/belt_MapString');
-const BeltMapInt = require('bs-platform/lib/js/belt_MapInt');
 
 /**
  * Data
@@ -60,13 +58,6 @@ exports.objectGetInCrio = (cycles) => {
   }
 };
 
-exports.objectGetInBelt = (cycles) => {
-  const obj = BeltMapString.fromArray([['data', BeltMapString.fromArray([['value', value]])]]);
-  for (let i = 0; i < cycles; i++) {
-    const val = BeltMapString.get(BeltMapString.get(obj, 'data')[0], 'value');
-  }
-};
-
 /**
  * Array
  */
@@ -113,14 +104,5 @@ exports.arrayGetInCrio = (cycles) => {
   for (let i = 0; i < cycles; i++) {
     const index = ~~(Math.random() * maxIndex);
     const val = arr[0][index];
-  }
-};
-
-exports.arrayGetInBelt = (cycles) => {
-  const arr = BeltMapInt.fromArray([[0, BeltMapInt.fromArray(array.map((v, i) => [i, v]))]]);
-  const maxIndex = BeltMapInt.size(BeltMapInt.get(arr, 0)[0]);
-  for (let i = 0; i < cycles; i++) {
-    const index = ~~(Math.random() * maxIndex);
-    const val = BeltMapInt.get(BeltMapInt.get(arr, 0)[0], index);
   }
 };
