@@ -119,14 +119,14 @@ logAndSave(test('[set-in] Object Native', objectSetInNative));
 logAndSave(test('[set-in] Object Seamless-immutable', objectSetInSeamlessImmutableJs));
 logAndSave(test('[set-in] Object Immutable.js', objectSetInImmutableJs));
 logAndSave(test('[set-in] Object Mori.js', objectSetInMoriJs));
-logAndSave(test('[set-in] Object Crio', objectSetInCrio));
+// logAndSave(test('[set-in] Object Crio', objectSetInCrio));
 logAndSave(test('[set-in] Object Immer', objectSetInImmer));
 // array set in tests
 logAndSave(test('[set-in] Array Native', arraySetInNative));
 logAndSave(test('[set-in] Array Seamless-immutable.js', arraySetInSeamlessImmutableJs));
 logAndSave(test('[set-in] Array Immutable.js', arraySetInImmutableJs));
 logAndSave(test('[set-in] Array Mori.js', arraySetInMoriJs));
-logAndSave(test('[set-in] Array Crio', arraySetInCrio));
+// logAndSave(test('[set-in] Array Crio', arraySetInCrio));
 logAndSave(test('[set-in] Array Immer', arraySetInImmer));
 // write to file
 fs.writeFileSync('results.csv', results.join('\n'), 'utf8');
